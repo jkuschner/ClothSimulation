@@ -6,30 +6,30 @@
 
 #define DEFAULT_SPRING_CONSTANT 1.0f
 #define DEFAULT_DAMPING_CONSTANT 1.0f
-#define DEFAULT_NORMAL glm::vec4(0, 1, 0, 0)
+#define DEFAULT_NORMAL glm::vec3(0, 1, 0)
 #define PARTICLE_SPACING 0.1f
 #define INITIAL_HEIGHT 5.0f
 #define SQRT2 1.41421356237f
 
 struct Particle {
-    glm::vec4 position;
-    glm::vec4 position_prev;
-    glm::vec4 velocity;
-    glm::vec4 force;
-    glm::vec4 normal;
+    glm::vec3 position;
+    glm::vec3 position_prev;
+    glm::vec3 velocity;
+    glm::vec3 force;
+    glm::vec3 normal;
     float     mass;
     bool      isFixed;
     GLuint particleID;
 
     public:
-        glm::vec4 acceleration() { return (1 / mass) * force; }
-        glm::vec4 momentum()     { return mass * velocity; }
+        glm::vec3 acceleration() { return (1 / mass) * force; }
+        glm::vec3 momentum()     { return mass * velocity; }
 
-        Particle(glm::vec4 pos, float m, bool fixed, GLuint id) {
+        Particle(glm::vec3 pos, float m, bool fixed, GLuint id) {
             position = pos;
             position_prev = pos;
-            velocity = glm::vec4(0);
-            force = glm::vec4(0);
+            velocity = glm::vec3(0);
+            force = glm::vec3(0);
             normal = DEFAULT_NORMAL;
             mass = m;
             isFixed = fixed;
@@ -38,7 +38,7 @@ struct Particle {
 
         void updatePosition(float timestep) {
             // Verlet w/ no collision detection and no oversampling
-            glm::vec4 position_new = 2.0f * position - position_prev;
+            glm::vec3 position_new = 2.0f * position - position_prev;
             position_new += acceleration() * timestep * timestep;
             position_prev = position;
             position = position_new;
@@ -67,7 +67,7 @@ public:
     }
 
     void ComputeForce() {
-        glm::vec4 e = p2->position - p1->position;
+        glm::vec3 e = p2->position - p1->position;
         float length = glm::length(e);
         e = glm::normalize(e);
 
@@ -82,8 +82,8 @@ public:
 
 struct Triangle {
     Particle *p1, *p2, *p3;
-    glm::vec4 normal;
-    glm::vec4 velocity;
+    glm::vec3 normal;
+    glm::vec3 velocity;
 
 public:
     Triangle(Particle* particle1,
@@ -126,9 +126,8 @@ public:
         matrix_world = glm::mat4(1);
 
         particles.reserve(size);
-        glm::vec4 tmpPos;
+        glm::vec3 tmpPos;
         tmpPos.y = INITIAL_HEIGHT;
-        tmpPos.w = 1;
         bool fixed = false;
         unsigned int particleCount = 0;
         for(int i = 0; i < size; i++) {
@@ -199,8 +198,8 @@ public:
 
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
-                positions.push_back(particles[i][j]->position);
-                normals.push_back(particles[i][j]->normal);
+                positions.push_back(glm::vec4(particles[i][j]->position, 1));
+                normals.push_back(glm::vec4(particles[i][j]->normal, 0));
                 verts.push_back(new Vertex(positions.back(), normals.back()));
             }
         }
@@ -228,5 +227,9 @@ public:
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
 
             glBindVertexArray(0);
+    }
+    
+    void update() {
+        matrix_world = glm::mat4(1);
     }
 };
