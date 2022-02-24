@@ -10,6 +10,7 @@
 #include "Shader.hpp"
 #include "core.hpp"
 #include "utils.hpp"
+#include "Cloth.hpp"
 
 const int width = 800;
 const int height = 600;
@@ -38,7 +39,8 @@ void initialize() {
     */
 
     scene = new Scene("Scene");
-    scene->objects.insert(std::make_pair("Cube", new Cube("Cube", glm::vec3(-1, -1, -1), glm::vec3(1, 1, 1))));
+    cloth = new Cloth("cloth", 15, 1.0f);
+    scene->objects.insert(std::make_pair("Cloth", cloth));
 }
 
 
