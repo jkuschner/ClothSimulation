@@ -32,6 +32,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0340A0A527C77594000B0914 /* Cloth.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Cloth.hpp; sourceTree = "<group>"; };
 		7937E0F1277192F900A0F6D8 /* Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene.hpp; sourceTree = "<group>"; };
 		7937E0F22771983300A0F6D8 /* Object.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Object.hpp; sourceTree = "<group>"; };
 		798BE8B927865E7E001DE5E5 /* Grid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Grid.hpp; sourceTree = "<group>"; };
@@ -996,6 +997,7 @@
 			children = (
 				C0EF3EDC27856CD700F6425C /* utils.hpp */,
 				79F44D4C276BA44B009E3C5C /* main.cpp */,
+				0340A0A527C77594000B0914 /* Cloth.hpp */,
 				7937E0F1277192F900A0F6D8 /* Scene.hpp */,
 				79BBF60227729B71006AB04A /* Scene.cpp */,
 				C0EF3ED9278567C600F6425C /* Tokenizer.hpp */,
