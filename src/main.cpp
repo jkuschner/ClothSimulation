@@ -21,6 +21,7 @@ int mouseX = 0, mouseY = 0;
 bool wireframe_mode = false;
 
 Scene* scene;
+Cloth* cloth;
 std::map<std::string, Shader*> shaders;
 
 
