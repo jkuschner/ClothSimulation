@@ -38,7 +38,7 @@ struct Particle {
 
         void updatePosition(float timestep) {
             // Verlet w/ no collision detection and no oversampling
-            glm::vec4 position_new = 2 * position - position_prev;
+            glm::vec4 position_new = 2.0f * position - position_prev;
             position_new += acceleration() * timestep * timestep;
             position_prev = position;
             position = position_new;
@@ -52,9 +52,9 @@ struct SpringDamper {
     Particle *p1, *p2;
 
 public:
-    SpringDamper(const Particle& particle1,
-                 const Particle& particle2,
-                 const bool diagonal) {
+    SpringDamper(Particle* particle1,
+                 Particle* particle2,
+                 bool diagonal) {
         springConstant = DEFAULT_SPRING_CONSTANT;
         dampingConstant = DEFAULT_DAMPING_CONSTANT;
         if(diagonal)
@@ -86,9 +86,9 @@ struct Triangle {
     glm::vec4 velocity;
 
 public:
-    Triangle(const Particle& particle1,
-             const Particle& particle2,
-             const Particle& particle3) {
+    Triangle(Particle* particle1,
+             Particle* particle2,
+             Particle* particle3) {
         p1 = particle1;
         p2 = particle2;
         p3 = particle3;
@@ -96,7 +96,7 @@ public:
     }
 
     void calcVelocity() {
-        velocity = (p1->velocity + p2->velocity + p3->velocity) / 3;
+        velocity = (p1->velocity + p2->velocity + p3->velocity) / 3.0f;
     }
 
     void calcNormal() {
@@ -114,14 +114,14 @@ public:
 
 class Cloth : public Mesh {
 public:
-    std::vector<std::vector<*Particle>> particles;
-    std::vector<*SpringDamper> springDampers;
-    std::vector<*Triangle> triangles;
+    std::vector<std::vector<Particle*>> particles;
+    std::vector<SpringDamper*> springDampers;
+    std::vector<Triangle*> triangles;
 
     // constructor for square shaped grid of particles
     explicit Cloth(const std::string& name, 
-                   const int size, 
-                   const float mass,) : Object(name) {
+                   int size,
+                   float mass) : Mesh(name) {
 
         matrix_world = glm::mat4(1);
 
@@ -132,8 +132,9 @@ public:
         bool fixed = false;
         unsigned int particleCount = 0;
         for(int i = 0; i < size; i++) {
-            particles.push_back(new std::vector<*Particle>());
-            particles.back()->reserve(size);
+            std::vector<Particle*> nextvec;
+            particles.push_back(nextvec);
+            particles.back().reserve(size);
             for(int j = 0; j < size; j++) {
                 tmpPos.x = j * PARTICLE_SPACING;
                 tmpPos.z = i * PARTICLE_SPACING;
@@ -141,7 +142,7 @@ public:
                 if(i == 0 && (j == 0 || j == size - 1))
                     fixed = true;
 
-                particles.push_back(new Particle(tmpPos, mass, fixed, particleCount));
+                particles.back().push_back(new Particle(tmpPos, mass, fixed, particleCount));
                 particleCount++;
 
                 // create and connect SpringDampers
@@ -228,4 +229,4 @@ public:
 
             glBindVertexArray(0);
     }
-}
+};
