@@ -40,7 +40,7 @@ void initialize() {
     */
 
     scene = new Scene("Scene");
-    cloth = new Cloth("Cloth", 15, 1.0f);
+    cloth = new Cloth("Cloth", 15, MASS);
     scene->objects.insert(std::make_pair("Cloth", cloth));
 }
 

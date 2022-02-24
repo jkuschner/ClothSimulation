@@ -4,12 +4,15 @@
 #include "core.hpp"
 #include "Mesh.hpp"
 
-#define DEFAULT_SPRING_CONSTANT 1.0f
-#define DEFAULT_DAMPING_CONSTANT 1.0f
+#define DEFAULT_SPRING_CONSTANT 1200.0f
+#define DEFAULT_DAMPING_CONSTANT 4.0f
 #define DEFAULT_NORMAL glm::vec3(0, 1, 0)
-#define PARTICLE_SPACING 0.1f
-#define INITIAL_HEIGHT 5.0f
+#define PARTICLE_SPACING 0.2f
+#define INITIAL_HEIGHT 2.5f
 #define SQRT2 1.41421356237f
+#define TIME_STEP 0.01f
+#define GRAVITY -9.8f
+#define MASS 0.5f
 
 struct Particle {
     glm::vec3 position;
@@ -42,6 +45,8 @@ struct Particle {
             position_new += acceleration() * timestep * timestep;
             position_prev = position;
             position = position_new;
+
+            velocity += acceleration() * timestep;
         }
 };
 

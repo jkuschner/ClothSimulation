@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0340A0A727C82727000B0914 /* Cloth.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0340A0A627C82726000B0914 /* Cloth.cpp */; };
 		79A186FA27718472000FB42A /* assets in CopyFiles */ = {isa = PBXBuildFile; fileRef = 79A186F927718460000FB42A /* assets */; };
 		79BBF60327729B71006AB04A /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79BBF60227729B71006AB04A /* Scene.cpp */; };
 		79D8107D276EF006003A8C18 /* glm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 79D80FC0276EF005003A8C18 /* glm.cpp */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		0340A0A527C77594000B0914 /* Cloth.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Cloth.hpp; sourceTree = "<group>"; };
+		0340A0A627C82726000B0914 /* Cloth.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cloth.cpp; sourceTree = "<group>"; };
 		7937E0F1277192F900A0F6D8 /* Scene.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scene.hpp; sourceTree = "<group>"; };
 		7937E0F22771983300A0F6D8 /* Object.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Object.hpp; sourceTree = "<group>"; };
 		798BE8B927865E7E001DE5E5 /* Grid.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Grid.hpp; sourceTree = "<group>"; };
@@ -995,6 +997,7 @@
 		79F44D4B276BA44B009E3C5C /* src */ = {
 			isa = PBXGroup;
 			children = (
+				0340A0A627C82726000B0914 /* Cloth.cpp */,
 				C0EF3EDC27856CD700F6425C /* utils.hpp */,
 				79F44D4C276BA44B009E3C5C /* main.cpp */,
 				0340A0A527C77594000B0914 /* Cloth.hpp */,
@@ -1074,6 +1077,7 @@
 			files = (
 				79BBF60327729B71006AB04A /* Scene.cpp in Sources */,
 				C0EF3EDA278567C600F6425C /* Tokenizer.cpp in Sources */,
+				0340A0A727C82727000B0914 /* Cloth.cpp in Sources */,
 				79D8107D276EF006003A8C18 /* glm.cpp in Sources */,
 				79F44D4D276BA44B009E3C5C /* main.cpp in Sources */,
 			);
