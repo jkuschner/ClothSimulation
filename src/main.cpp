@@ -71,9 +71,12 @@ void display_callback() {
 void idle_callback() {
     // MARK: Perform any background tasks here
     // CALL glutPostRedisplay() if the work changes what's displayed on screen
+    /*
     for (const auto& object: scene->objects) {
         object.second->update();
     }
+    */
+    cloth->update();
     glutPostRedisplay();
 }
 
