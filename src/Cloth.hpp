@@ -8,7 +8,7 @@
 #define DEFAULT_NORMAL glm::vec3(0, 1, 0)
 
 #define PARTICLE_SPACING 0.2f
-#define INITIAL_HEIGHT 2.5f
+#define INITIAL_HEIGHT 1.7f
 
 #define TIME_STEP 0.01f
 
@@ -19,7 +19,7 @@
 
 #define AIR_DENSITY 1.225f
 #define DRAG_COFF 1.28f
-#define V_WIND glm::vec3(1.0f, 0, 0)
+#define V_WIND glm::vec3(0, 0, 20.0f)
 
 struct Particle {
     glm::vec3 position;
@@ -127,7 +127,7 @@ public:
 
     void computeForce() {
         glm::vec3 dragForce = normal;
-        dragForce *= -0.5f * AIR_DENSITY * DRAG_COFF * glm::length2(velocity) * getArea();
+        dragForce *= -0.5f * AIR_DENSITY * DRAG_COFF * glm::dot(velocity, velocity) * getArea();
         dragForce /= 3.0f;
 
         // apply force to all 3 particles
