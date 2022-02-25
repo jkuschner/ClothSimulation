@@ -60,7 +60,7 @@ struct Particle {
                 // collision handle
                 glm::vec3 ground_normal = glm::vec3(0,1,0);
                 float v_close = glm::dot(velocity, ground_normal);
-                glm::vec3 impulse *= -1.0f * (1.0f + RESTITUTION) * mass * v_close;
+                glm::vec3 impulse = -1.0f * (1.0f + RESTITUTION) * mass * v_close * ground_normal;
 
                 // calculate impulse due to friction
                 // start with finding v_tangent
@@ -74,11 +74,11 @@ struct Particle {
                 velocity += impulse / mass;
 
                 // fix position
-                glm::vec3 contact_point = (position_prev.y * position) - *(position.y * position_prev);
+                glm::vec3 contact_point = (position_prev.y * position) - (position.y * position_prev);
                 contact_point /= position_prev.y - position.y;
 
                 position_prev = contact_point; //maybe not needed??
-                position = contact_point + (velocity * timestep * 0.5f) // approx w/ half a time step
+                position = contact_point + (velocity * timestep * 0.5f); // approx w/ half a time step
             } else {
                 velocity += acceleration() * timestep;
             }
