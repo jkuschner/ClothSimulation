@@ -174,5 +174,5 @@ public:
     // constructor for square shaped grid of particles
     explicit Cloth(const std::string& name, int size, float mass);
     
-    void update();
+    void update(glm::vec3 windSpeed);
 };
