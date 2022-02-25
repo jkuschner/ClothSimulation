@@ -116,7 +116,7 @@ void handle_keypress(unsigned char key, int x, int y) {
         case 'u':
             cloth->translateFixed(glm::vec3(0,0,0.1f));
             break;
-        case 'p':
+        case 'o':
             cloth->translateFixed(glm::vec3(0,0,-0.1f));
             break;
 
@@ -189,6 +189,9 @@ int main(int argc, char * argv[]) {
     glutInitWindowSize(width, height);
     glutCreateWindow("Viewer");
     std::cout << "OpenGL Version: " << glGetString(GL_VERSION) << std::endl;
+
+    //print controls
+    std::cout << "Controls:\nq: increase Windspeed\na: decrease Windspeed\ni: move upward\nk: move downward\nj:move leftward\nl:move rightward\nu: move forward\no: move backward" << std::endl;
 
     initialize();
 
