@@ -175,4 +175,6 @@ public:
     explicit Cloth(const std::string& name, int size, float mass);
     
     void update(glm::vec3 windSpeed);
+
+    void translateFixed(glm::vec3 translation);
 };

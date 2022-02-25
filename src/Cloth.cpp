@@ -199,5 +199,15 @@ void Cloth::update(glm::vec3 windSpeed) {
     glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     glBindVertexArray(0);
+}
+
+void Cloth::translateFixed(glm::vec3 translation) {
+    for(int i = 0; i < particles.size(); i++) {
+        for(int j = 0; j < particles[0].size(); j++) {
+            if(particles[i][j]->isFixed) {
+                particles[i][j]->position += translation;
+            }
+        }
+    }
 
 }

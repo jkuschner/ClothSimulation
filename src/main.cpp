@@ -101,6 +101,24 @@ void handle_keypress(unsigned char key, int x, int y) {
         case 'a':
             windSpeed.z -= 1.0f;
             break;
+        case 'i':
+            cloth->translateFixed(glm::vec3(0,0.1f,0));
+            break;
+        case 'k':
+            cloth->translateFixed(glm::vec3(0,-0.1f,0));
+            break;
+        case 'j':
+            cloth->translateFixed(glm::vec3(-0.1f,0,0));
+            break;
+        case 'l':
+            cloth->translateFixed(glm::vec3(0.1f,0,0));
+            break;
+        case 'u':
+            cloth->translateFixed(glm::vec3(0,0,0.1f));
+            break;
+        case 'p':
+            cloth->translateFixed(glm::vec3(0,0,-0.1f));
+            break;
 
         //
         // MARK: Add your custom keystroks here.
