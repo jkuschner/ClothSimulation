@@ -19,7 +19,7 @@
 
 #define AIR_DENSITY 1.225f
 #define DRAG_COFF 1.28f
-#define V_WIND glm::vec3(0, 0, 20.0f)
+#define DEFAULT_WIND_SPEED glm::vec3(0, 0, 20.0f)
 
 #define RESTITUTION 0.05f
 #define FRICTION_COFF 0.5f
@@ -136,9 +136,9 @@ public:
         velocity = glm::vec3(0);
     }
 
-    void calcVelocity() {
+    void calcVelocity(glm::vec3 windSpeed) {
         velocity = (p1->velocity + p2->velocity + p3->velocity) / 3.0f;
-        velocity -= V_WIND;
+        velocity -= windSpeed;
     }
 
     void calcNormal() {

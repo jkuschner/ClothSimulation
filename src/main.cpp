@@ -24,6 +24,8 @@ Scene* scene;
 Cloth* cloth;
 std::map<std::string, Shader*> shaders;
 
+glm::vec3 windSpeed = DEFAULT_WIND_SPEED;
+
 
 void initialize() {
     glClearColor(0.0f, 0.0f, 0.0f, 1);
@@ -76,7 +78,7 @@ void idle_callback() {
         object.second->update();
     }
     */
-    cloth->update();
+    cloth->update(windSpeed);
     glutPostRedisplay();
 }
 
@@ -92,6 +94,12 @@ void handle_keypress(unsigned char key, int x, int y) {
             break;
         case 'w':
             wireframe_mode = !wireframe_mode;
+            break;
+        case 'q':
+            windSpeed.z += 1.0f;
+            break;
+        case 'a':
+            windSpeed.z -= 1.0f;
             break;
 
         //

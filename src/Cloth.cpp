@@ -115,7 +115,7 @@ Cloth::Cloth(const std::string& name, int size, float mass) : Mesh(name) {
     glBindVertexArray(0);
 }
 
-void Cloth::update() {
+void Cloth::update(glm::vec3 windSpeed) {
     // zero out forces
     for(int i = 0; i < particles.size(); i++) {
         for(int j = 0; j < particles[0].size(); j++) {
@@ -139,7 +139,7 @@ void Cloth::update() {
 
     // apply drag force
     for(int i = 0; i < triangles.size(); i++) {
-        triangles[i]->calcVelocity();
+        triangles[i]->calcVelocity(windSpeed);
         triangles[i]->computeForce();
     }
     
