@@ -21,6 +21,9 @@
 #define DRAG_COFF 1.28f
 #define V_WIND glm::vec3(0, 0, 20.0f)
 
+#define RESTITUTION 0.05f
+#define FRICTION_COFF 0.5f
+
 struct Particle {
     glm::vec3 position;
     glm::vec3 position_prev;
@@ -53,7 +56,32 @@ struct Particle {
             position_prev = position;
             position = position_new;
 
-            velocity += acceleration() * timestep;
+            if (position.y < 0.0f) { // ground collision detection
+                // collision handle
+                glm::vec3 ground_normal = glm::vec3(0,1,0);
+                float v_close = glm::dot(velocity, ground_normal);
+                glm::vec3 impulse *= -1.0f * (1.0f + RESTITUTION) * mass * v_close;
+
+                // calculate impulse due to friction
+                // start with finding v_tangent
+                glm::vec3 fric_impulse = velocity - (v_close * ground_normal);
+                fric_impulse = -1.0f * glm::normalize(fric_impulse);
+                fric_impulse *= FRICTION_COFF * glm::length(impulse);
+
+                // add to frictionless impulse for final impulse
+                impulse += fric_impulse;
+                // apply to velocity
+                velocity += impulse / mass;
+
+                // fix position
+                glm::vec3 contact_point = (position_prev.y * position) - *(position.y * position_prev);
+                contact_point /= position_prev.y - position.y;
+
+                position_prev = contact_point; //maybe not needed??
+                position = contact_point + (velocity * timestep * 0.5f) // approx w/ half a time step
+            } else {
+                velocity += acceleration() * timestep;
+            }
         }
 };
 
