@@ -4,15 +4,22 @@
 #include "core.hpp"
 #include "Mesh.hpp"
 
-#define DEFAULT_SPRING_CONSTANT 1200.0f
-#define DEFAULT_DAMPING_CONSTANT 4.0f
+#define SQRT2 1.41421356237f
 #define DEFAULT_NORMAL glm::vec3(0, 1, 0)
+
 #define PARTICLE_SPACING 0.2f
 #define INITIAL_HEIGHT 2.5f
-#define SQRT2 1.41421356237f
+
 #define TIME_STEP 0.01f
+
+#define DEFAULT_SPRING_CONSTANT 1200.0f
+#define DEFAULT_DAMPING_CONSTANT 4.0f
 #define GRAVITY -9.8f
 #define MASS 0.5f
+
+#define AIR_DENSITY 1.225f
+#define DRAG_COFF 1.28f
+#define V_WIND glm::vec3(1.0f, 0, 0)
 
 struct Particle {
     glm::vec3 position;
@@ -71,7 +78,7 @@ public:
         p2 = particle2;
     }
 
-    void ComputeForce() {
+    void computeForce() {
         glm::vec3 e = p2->position - p1->position;
         float length = glm::length(e);
         e = glm::normalize(e);
@@ -98,10 +105,12 @@ public:
         p2 = particle2;
         p3 = particle3;
         normal = DEFAULT_NORMAL;
+        velocity = glm::vec3(0);
     }
 
     void calcVelocity() {
         velocity = (p1->velocity + p2->velocity + p3->velocity) / 3.0f;
+        velocity -= V_WIND;
     }
 
     void calcNormal() {
@@ -114,6 +123,17 @@ public:
 
         area *= glm::dot(glm::normalize(velocity), normal);
         return area;
+    }
+
+    void computeForce() {
+        glm::vec3 dragForce = normal;
+        dragForce *= -0.5f * AIR_DENSITY * DRAG_COFF * glm::length2(velocity) * getArea();
+        dragForce /= 3.0f;
+
+        // apply force to all 3 particles
+        p1->force += dragForce;
+        p2->force += dragForce;
+        p3->force += dragForce;
     }
 };
 

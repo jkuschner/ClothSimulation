@@ -134,7 +134,13 @@ void Cloth::update() {
 
     // apply springdamper force
     for(int i = 0; i < springDampers.size(); i++) {
-        springDampers[i]->ComputeForce();
+        springDampers[i]->computeForce();
+    }
+
+    // apply drag force
+    for(int i = 0; i < triangles.size(); i++) {
+        triangles[i]->calcVelocity();
+        triangles[i]->computeForce();
     }
     
     // Integrate motion
